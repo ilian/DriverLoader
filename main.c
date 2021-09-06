@@ -12,13 +12,13 @@ BOOL FileExists(LPCTSTR szPath)
 
 int main(int argc, char *argv[]) {
     int err = 0;
-    if (argc < 2) {
-        fprintf(stderr, "Usage: %s DRIVER_PATH [SERVICE_NAME]\n", argv[0]);
+    if (argc < 3) {
+        fprintf(stderr, "Usage: %s DRIVER_PATH SERVICE_NAME\n", argv[0]);
         return 1;
     }
 
     char *driver_path = argv[1];
-    char *service_name = argc >= 3 ? argv[2] : driver_path;
+    char *service_name = argv[2];
     char *display_name = service_name;
 
     if (!FileExists(driver_path)) {
