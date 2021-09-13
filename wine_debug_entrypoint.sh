@@ -70,6 +70,7 @@ echo "Attaching gdb to entrypoint of driver"
 (sleep 1; exec wine64 main.exe "$(./unixpathtowine.sh "$mod_sys_file")" "$service_name") &
 gdb \
   -q \
+  -ix gdbinit.py \
   -iex 'set detach-on-fork off' \
   -iex 'set schedule-multiple on' \
   -iex 'set pagination off' \
