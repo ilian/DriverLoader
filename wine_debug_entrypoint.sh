@@ -67,7 +67,16 @@ wine64 wineboot -h 2> /dev/null
 
 echo "Attaching gdb to entrypoint of driver"
 
-(sleep 1; exec wine64 main.exe "$(./unixpathtowine.sh "$mod_sys_file")" "$service_name") &
+unix_to_win() {
+  # Convert a UNIX path to a Windows path without depending on 'winepath -w'
+  # to avoid starting other wine processes
+  unixpath="$(realpath "$1")"
+  # Assume default drive mapping of Z:\
+  echo -n "Z:"
+  sed 's/\//\\/g' <<< "$unixpath"
+}
+
+(sleep 1; exec wine64 main.exe "$(unix_to_win "$mod_sys_file")" "$service_name") &
 gdb \
   -q \
   -ix gdbinit.py \
